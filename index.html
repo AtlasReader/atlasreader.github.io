@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6eedf" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Atlas Reader" />
+    <link rel="icon" type="image/png" href="/atlas-icons/app-color-192.png" />
+    <link rel="apple-touch-icon" href="/atlas-icons/app-color-192.png" />
+    <title>Atlas Reader</title>
+    <script>
+      // Apply the saved theme before first paint, so the splash below already
+      // wears the reader's colours (mirrors settings/presentation.ts).
+      try {
+        var p = JSON.parse(localStorage.getItem('atlas-reader-presentation') || '{}')
+        var dark = typeof p.nightMode === 'boolean' ? p.nightMode : matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+        document.documentElement.dataset.city = p.colorTheme || 'damascus'
+      } catch (e) {}
+    </script>
+    <style>
+      /* Static splash: shown from first paint until React's loading screen
+         (same layout, see App.tsx) replaces it. */
+      .atlas-splash { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; background:var(--color-bg, #f6eedf); }
+      :root[data-theme='dark'] .atlas-splash { background:var(--color-bg, #211b16); }
+      .atlas-splash img { width:128px; height:128px; border-radius:28px; box-shadow:0 8px 28px rgba(0,0,0,.18); }
+      .atlas-splash__bar { width:160px; height:4px; border-radius:2px; background:var(--color-accent-soft, #eadbc7); overflow:hidden; }
+      .atlas-splash__fill { height:100%; width:0; background:var(--color-accent, #90643f); transition:width .2s ease; }
+      .atlas-splash__label { min-height:1.2em; font:13px -apple-system, system-ui, sans-serif; color:var(--color-muted, #7d6d5d); }
+    </style>
+    <script type="module" crossorigin src="/assets/index-wT9EfSod.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BbTVxqm6.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+  <body>
+    <div id="root"><div class="atlas-splash"><img src="/atlas-icons/app-color.png" alt="Atlas Reader" /></div></div>
+  </body>
+</html>
