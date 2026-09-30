@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- maximum-scale=1: iOS zooms the page into a focused field and never
+         zooms back, leaving the app shifted and wider than the screen. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="theme-color" content="#f6eedf" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Atlas Reader" />
+    <link rel="icon" type="image/png" href="/atlas-icons/app-color-192.png" />
+    <link rel="apple-touch-icon" href="/atlas-icons/app-color-192.png" />
+    <title>Atlas Reader</title>
+    <script>
+      // Apply the saved theme before first paint, so the splash below already
+      // wears the reader's colours (mirrors settings/presentation.ts).
+      try {
+        var p = JSON.parse(localStorage.getItem('atlas-reader-presentation') || '{}')
+        var dark = typeof p.nightMode === 'boolean' ? p.nightMode : matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+        document.documentElement.dataset.city = p.colorTheme || 'damascus'
+      } catch (e) {}
+    </script>
+    <style>
+      /* Static splash: shown from first paint until React's loading screen
+         (same markup, see App.tsx) replaces it. */
+      .atlas-splash { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:24px; background:var(--color-bg, #f6eedf); color:var(--color-text, #2b2118); font-family:-apple-system, system-ui, sans-serif; }
+      .atlas-splash__title { margin:0; font-size:30px; font-weight:700; letter-spacing:.01em; }
+      .atlas-splash__logo { width:min(62vw, 280px); height:auto; }
+      .atlas-splash__logo--night { display:none; }
+      :root[data-theme='dark'] .atlas-splash__logo--day { display:none; }
+      :root[data-theme='dark'] .atlas-splash__logo--night { display:block; }
+      .atlas-splash__version { margin:0; font-size:12px; color:var(--color-muted, #7d6d5d); letter-spacing:.03em; }
+      .atlas-splash__progress { display:flex; flex-direction:column; align-items:center; gap:10px; min-height:40px; }
+      .atlas-splash__bar { width:160px; height:4px; border-radius:2px; background:var(--color-accent-soft, #eadbc7); overflow:hidden; }
+      .atlas-splash__fill { height:100%; width:0; background:var(--color-accent, #90643f); transition:width .2s ease; }
+      .atlas-splash__label { margin:0; font-size:13px; color:var(--color-muted, #7d6d5d); }
+    </style>
+    <script type="module" crossorigin src="/assets/index-mowP9wtG.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BG1ZqF1k.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+  <body>
+    <div id="root"><div class="atlas-splash">
+      <h1 class="atlas-splash__title">Atlas Reader</h1>
+      <img class="atlas-splash__logo atlas-splash__logo--day" src="/atlas-icons/app-splash-color-600.png" alt="" />
+      <img class="atlas-splash__logo atlas-splash__logo--night" src="/atlas-icons/app-splash-grayscale-600.png" alt="" />
+      <p class="atlas-splash__version">0.1.0 (79) · c4cbee8</p>
+      <div class="atlas-splash__progress"></div>
+    </div></div>
+  </body>
+</html>
